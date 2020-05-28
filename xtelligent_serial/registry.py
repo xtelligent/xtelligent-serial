@@ -1,10 +1,12 @@
 from collections.abc import Sequence, Iterable, Mapping
-from dataclasses import dataclass, is_dataclass, fields
+from dataclasses import is_dataclass, fields
 from functools import singledispatch
 from inspect import ismethod, isfunction
-from typing import Callable, Any, Type
+from typing import Any, Type
 
 from .signatures import JSONSerializable, Serializer, Deserializer
+
+# pylint: disable=redefined-builtin
 
 def iscallable(v):
     return ismethod(v) or isfunction(v)
@@ -44,7 +46,7 @@ def _(target: bool) -> JSONSerializable:
 def _(target: str) -> JSONSerializable:
     return target
 
-typekey = '?__type__?'
+TYPEKEY = '?__type__?'
 
 def fjd_for_dataclass(type, raw_data):
     type_fields = {f.name:f for f in fields(type)}
@@ -55,16 +57,16 @@ def fjd_for_dataclass(type, raw_data):
 def fjd(raw_data: JSONSerializable) -> Any:
     if raw_data is None:
         return None
-    type = raw_data.get(typekey) or type(object)
-    if is_dataclass(type):
-        return fjd_for_dataclass(type, raw_data)
+    t = raw_data.get(TYPEKEY) or type(object)
+    if is_dataclass(t):
+        return fjd_for_dataclass(t, raw_data)
     raise ValueError(f'No deserialization method for {raw_data}')
 
 def from_serializable(type: Type, raw_data: JSONSerializable) -> Any:
     func = fjd.dispatch(type)
     if not func:
         raise ValueError(f'No deserialization handler for type {type}')
-    return func(raw_data) if not isinstance(raw_data, Mapping) else func({**raw_data, typekey: type})
+    return func(raw_data) if not isinstance(raw_data, Mapping) else func({**raw_data, TYPEKEY: type})
 
 @fjd.register
 def _(i: int):

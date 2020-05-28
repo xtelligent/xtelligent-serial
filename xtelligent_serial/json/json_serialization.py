@@ -1,6 +1,8 @@
 from json import dumps, loads
 from typing import Type
 
+# pylint: disable=redefined-builtin
+
 from .. import to_serializable, from_serializable, JSONSerializable
 
 def to_json(target: JSONSerializable, **kwargs) -> str:

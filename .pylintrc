@@ -3,7 +3,8 @@ ignore=testing/algs/offset_dev
 
 [MESSAGES CONTROL]
 disable=fixme,import-error,too-many-locals,too-few-public-methods,duplicate-code,missing-function-docstring, \
-    missing-function-docstring,missing-class-docstring,missing-module-docstring,logging-fstring-interpolation
+    missing-function-docstring,missing-class-docstring,missing-module-docstring,logging-fstring-interpolation, \
+    not-callable
 
 [FORMAT]
 max-line-length=150

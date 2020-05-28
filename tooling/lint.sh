@@ -6,8 +6,10 @@ export PYVER="${1:-3.6}"
 set +e
 docker-compose -f "$MYDIR/docker/compose.yaml" run py pylint tests
 RC1=$?
-docker-compose -f "$MYDIR/docker/compose.yaml" run py pylint json_unmasked
+docker-compose -f "$MYDIR/docker/compose.yaml" run py pylint xtelligent_serial
 RC2=$?
+docker-compose -f "$MYDIR/docker/compose.yaml" run py pylint examples
+RC3=$?
 
 set -e
-test $RC1 -eq 0 && test $RC2 -eq 0
+test $RC1 -eq 0 && test $RC2 -eq 0 && test $RC3
