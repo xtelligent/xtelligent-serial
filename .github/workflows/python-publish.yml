@@ -35,6 +35,8 @@ jobs:
         BUILDNUMBER: $GITHUB_RUN_NUMBER
       run: |
         python setup.py sdist bdist_wheel
+        echo "Testing BUILDNUMBER..."
+        test -n "$BUILDNUMBER"
         echo "Testing user name..."
         test -n "$TWINE_USERNAME"
         echo "Testing password..."
