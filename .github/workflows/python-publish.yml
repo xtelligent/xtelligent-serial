@@ -35,4 +35,6 @@ jobs:
         BUILDNUMBER: $GITHUB_RUN_NUMBER
       run: |
         python setup.py sdist bdist_wheel
+        test -n "$TWINE_USERNAME"
+        test -n "$TWINE_PASSWORD"
         python -m twine upload dist/*
