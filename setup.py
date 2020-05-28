@@ -8,7 +8,7 @@ buildnumber = os.environ.get('BUILDNUMBER') or 1
 
 setuptools.setup(
     name="xtelligent-serial", # Replace with your own username
-    version=f'0.0.{buildnumber}',
+    version='0.0.{0}'.format(buildnumber),
     author="Xtelligent",
     author_email="development@xtelligent.io",
     description="Python object serialization focused on JSON",
