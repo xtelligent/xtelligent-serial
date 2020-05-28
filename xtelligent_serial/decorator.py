@@ -22,6 +22,7 @@ def deserializer(type: Type):
     return wrapper
 
 def serialization(Cls):
+    # pylint: disable=unnecessary-lambda
     register_serializer(Cls, lambda raw_data: Cls.__serializer__(raw_data))
     register_deserializer(Cls, lambda raw_data: Cls.__deserializer__(raw_data))
     return Cls
