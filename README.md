@@ -1,4 +1,6 @@
-# Serialization - JSON
+# Serialization + JSON
+
+![Lint+Test](https://github.com/xtelligent/xtelligent-serial/workflows/Lint+Test/badge.svg?branch=master)
 
 ## Synopsis
 
