@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  py:
+    build:
+      context: ../..
+      dockerfile: tooling/docker/testing.dockerfile
+      args:
+        - PYVER=${PYVER}
+    environment:
+      - "MODE=test"
+      - "PYTHONPATH=/usr/project"
+    volumes:
+      - ../../xtelligent_serial:/usr/project/xtelligent_serial
+      - ../../tests:/usr/project/tests
+      - ../../examples:/usr/project/examples
+      - ../../pytest.ini:/usr/project/pytest.ini
+      - ../../.pylintrc:/usr/project/.pylintrc

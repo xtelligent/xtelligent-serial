@@ -1,0 +1,16 @@
+[MASTER]
+ignore=testing/algs/offset_dev
+
+[MESSAGES CONTROL]
+disable=fixme,import-error,too-many-locals,too-few-public-methods,duplicate-code,missing-function-docstring, \
+    missing-function-docstring,missing-class-docstring,missing-module-docstring,logging-fstring-interpolation
+
+[FORMAT]
+max-line-length=150
+
+[BASIC]
+argument-rgx=^_{0,2}[a-z](_|[a-z0-9])*$
+variable-rgx=^_{0,2}[a-z](_|[a-z0-9])*$
+method-rgx=^_{0,2}[a-z](_|[a-z0-9])*$
+attr-rgx=^_{0,2}[a-z](_|[a-z0-9])*$
+class-attribute-rgx=^_{0,2}[a-z](_|[a-z0-9])*$
