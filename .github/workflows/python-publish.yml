@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -20,17 +20,33 @@ jobs:
     - name: Install dependencies + lint + test
       run: |
         python -m pip install --upgrade pip
-        pip install setuptools wheel twine pylint pytest
+        pip install setuptools pylint pytest
         python --version
-        python -m twine -h
         export PYTHONPATH="$PYTHONPATH:$(pwd)"
         pylint tests
         pylint xtelligent_serial
         pylint examples
         pytest tests
-    - name: Build and publish
+
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
       with:
-        python-version: 3.7
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools wheel twine
+        python --version
+        python -m twine -h
+    - name: Build and publish
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
