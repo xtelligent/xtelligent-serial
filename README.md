@@ -12,6 +12,7 @@ other formats.
 ## Example
 
 ```python
+# simple.py
 from dataclasses import dataclass
 from datetime import datetime
 
@@ -57,6 +58,14 @@ class Point:
 first_instance, second_instance = try_serialization(Point(21, 12))
 assert first_instance.x == second_instance.x
 assert first_instance.y == second_instance.y
+```
+
+Run it!
+
+```bash
+$ python simple.py
+<class '__main__.HasADate'>: {"d": "2020-05-28T02:46:05", "i": 2}
+<class '__main__.Point'>: {"x": 21, "y": 12}
 ```
 
 ## Roadmap

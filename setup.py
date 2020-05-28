@@ -11,10 +11,10 @@ setuptools.setup(
     version=f'0.0.{buildnumber}',
     author="Xtelligent",
     author_email="development@xtelligent.io",
-    description="Serialization, especially for JSON",
+    description="Python object serialization focused on JSON",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
+    url="https://github.com/xtelligent/xtelligent-serial.git",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
