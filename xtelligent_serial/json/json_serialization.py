@@ -24,15 +24,17 @@ def from_json(type: Type, json_text: str, **kwargs) -> JSONSerializable:
         >>> @serialization
             class Boo:
                 def __init__(self, x):
-                    self.root = x
+                    self.x = x
                 @classmethod
                 def __serializer__(cls, instance):
-                    return {'x': instance.root, 'y': instance.y}
+                    return {'x': instance.x}
                 @classmethod
                 def __deserializer__(cls, raw_data):
                     return cls(raw_data['x']) # pylint: disable=not-callable
-        >>> from_json(Boo, '{"x": 4}')
+        >>> b = from_json(Boo, '{"x": 4}')
         <__main__.Boo object at 0x7fcfcdcb4fa0>
+        >>> b.x
+        4
     '''
     d = loads(json_text, **kwargs)
     return from_serializable(type, d)
