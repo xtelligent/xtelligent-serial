@@ -33,12 +33,13 @@ jobs:
         git pull || true
         git reset --hard origin/gh-pages
         git checkout "$SOURCE_BRANCH" -- examples/** tooling/** xtelligent_serial/** README.md LICENSE
-        # git merge --strategy recursive --strategy-option theirs -m "Merging $SOURCE_BRANCH" "$SOURCE_BRANCH"
+        git status
         # start recording changes
         cd "$PROJDIR"
         OUTDIR="./docs"
         mkdir -p "$OUTDIR"
         pdoc --html --output-dir "$OUTDIR" xtelligent_serial examples
+        git status
         git add --all
         git commit -m "Generated documentation."
         git push
