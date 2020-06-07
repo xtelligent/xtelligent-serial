@@ -32,7 +32,7 @@ jobs:
         git checkout gh-pages
         git pull || true
         git reset --hard origin/gh-pages
-        git merge --strategy recursive theirs -m "Merging $SOURCE_BRANCH" "$SOURCE_BRANCH"
+        git merge --strategy recursive --strategy-option theirs -m "Merging $SOURCE_BRANCH" "$SOURCE_BRANCH"
         # start recording changes
         cd "$PROJDIR"
         OUTDIR="./docs"
