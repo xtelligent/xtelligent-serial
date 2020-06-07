@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
 <title>examples.simple API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Expand the code to view …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,11 +20,24 @@
 <h1 class="title">Module <code>examples.simple</code></h1>
 </header>
 <section id="section-intro">
+<p>Expand the code to view.</p>
+<h2 id="run">Run</h2>
+<p>$ python simple.py
+<class '__main__.HasADate'>: {"d": "2020-05-28T02:46:05", "i": 2}
+<class '__main__.Point'>: {"x": 21, "y": 12}</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from dataclasses import dataclass
+<pre><code class="python">&#39;&#39;&#39;
+Expand the code to view.
+
+Run:
+    $ python simple.py
+    &lt;class &#39;__main__.HasADate&#39;&gt;: {&#34;d&#34;: &#34;2020-05-28T02:46:05&#34;, &#34;i&#34;: 2}
+    &lt;class &#39;__main__.Point&#39;&gt;: {&#34;x&#34;: 21, &#34;y&#34;: 12}
+&#39;&#39;&#39;
+from dataclasses import dataclass
 from datetime import datetime
 
 from xtelligent_serial import deserializer, serializer, serialization

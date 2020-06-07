@@ -88,7 +88,7 @@ __all__ = [
 </code></dt>
 <dd>
 <div class="desc"><p>Decorator that registers a function as a deserializer for a type.</p>
-<p>See:<code><a title="examples.simple.str2dt" href="../examples/simple.html#examples.simple.str2dt">str2dt()</a></code></p></div>
+<p>See:<code><a title="examples.simple" href="../examples/simple.html">examples.simple</a></code></p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -96,7 +96,7 @@ __all__ = [
 <pre><code class="python">def deserializer(type: Type):
     &#39;&#39;&#39;Decorator that registers a function as a deserializer for a type.
 
-    See:`examples.simple.str2dt`
+    See:`examples.simple`
     &#39;&#39;&#39;
     def wrapper(func: Deserializer):
         update_wrapper(wrapper, func)
@@ -110,7 +110,7 @@ __all__ = [
 </code></dt>
 <dd>
 <div class="desc"><p>Marks a class for serialization.</p>
-<p>See:<code><a title="examples.simple.Point" href="../examples/simple.html#examples.simple.Point">Point</a></code></p></div>
+<p>See:<code><a title="examples.simple" href="../examples/simple.html">examples.simple</a></code></p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -118,7 +118,7 @@ __all__ = [
 <pre><code class="python">def serialization(Cls):
     &#39;&#39;&#39;Marks a class for serialization.
 
-    See:`examples.simple.Point`
+    See:`examples.simple`
     &#39;&#39;&#39;
     # pylint: disable=unnecessary-lambda
     register_serializer(Cls, lambda raw_data: Cls.__serializer__(raw_data))
@@ -131,7 +131,7 @@ __all__ = [
 </code></dt>
 <dd>
 <div class="desc"><p>Decorator that registers a function as a serializer for a type.</p>
-<p>See:<code><a title="examples.simple.dthandler" href="../examples/simple.html#examples.simple.dthandler">dthandler()</a></code></p></div>
+<p>See:<code><a title="examples.simple" href="../examples/simple.html">examples.simple</a></code></p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -139,7 +139,7 @@ __all__ = [
 <pre><code class="python">def serializer(type: Type):
     &#39;&#39;&#39;Decorator that registers a function as a serializer for a type.
 
-    See:`examples.simple.dthandler`
+    See:`examples.simple`
     &#39;&#39;&#39;
     def wrapper(func: Serializer):
         update_wrapper(wrapper, func)

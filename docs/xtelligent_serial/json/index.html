@@ -56,15 +56,17 @@ __all__ = [
 &gt;&gt;&gt; @serialization
     class Boo:
         def __init__(self, x):
-            self.root = x
+            self.x = x
         @classmethod
         def __serializer__(cls, instance):
-            return {'x': instance.root, 'y': instance.y}
+            return {'x': instance.x}
         @classmethod
         def __deserializer__(cls, raw_data):
             return cls(raw_data['x']) # pylint: disable=not-callable
-&gt;&gt;&gt; from_json(Boo, '{&quot;x&quot;: 4}')
+&gt;&gt;&gt; b = from_json(Boo, '{&quot;x&quot;: 4}')
 &lt;__main__.Boo object at 0x7fcfcdcb4fa0&gt;
+&gt;&gt;&gt; b.x
+4
 </code></pre></div>
 <details class="source">
 <summary>
@@ -78,15 +80,17 @@ __all__ = [
         &gt;&gt;&gt; @serialization
             class Boo:
                 def __init__(self, x):
-                    self.root = x
+                    self.x = x
                 @classmethod
                 def __serializer__(cls, instance):
-                    return {&#39;x&#39;: instance.root, &#39;y&#39;: instance.y}
+                    return {&#39;x&#39;: instance.x}
                 @classmethod
                 def __deserializer__(cls, raw_data):
                     return cls(raw_data[&#39;x&#39;]) # pylint: disable=not-callable
-        &gt;&gt;&gt; from_json(Boo, &#39;{&#34;x&#34;: 4}&#39;)
+        &gt;&gt;&gt; b = from_json(Boo, &#39;{&#34;x&#34;: 4}&#39;)
         &lt;__main__.Boo object at 0x7fcfcdcb4fa0&gt;
+        &gt;&gt;&gt; b.x
+        4
     &#39;&#39;&#39;
     d = loads(json_text, **kwargs)
     return from_serializable(type, d)</code></pre>
