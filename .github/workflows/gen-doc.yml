@@ -35,7 +35,6 @@ jobs:
         git checkout "$SOURCE_BRANCH" -- examples/** tooling/** xtelligent_serial/** README.md LICENSE
         git status
         # start recording changes
-        cd "$PROJDIR"
         OUTDIR="./docs"
         mkdir -p "$OUTDIR"
         pdoc --html --output-dir "$OUTDIR" xtelligent_serial examples
