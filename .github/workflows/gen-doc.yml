@@ -23,4 +23,6 @@ jobs:
         pip install pdoc3
         export PYTHONPATH="$PYTHONPATH:$(pwd)"
         export PYTHONWARNINGS="error::UserWarning"
-        pdoc --html --output-dir /var/doc xtelligent_serial examples
+        OUTDIR="./.tmp/doc"
+        mkdir -p "$OUTDIR"
+        pdoc --html --output-dir "$OUTDIR" xtelligent_serial examples
