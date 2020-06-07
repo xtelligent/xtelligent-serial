@@ -6,11 +6,13 @@ TEMPDIR="$PROJDIR/.tmp/doc"
 
 SOURCE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
+set -x
+
 # get on the branch we want.
 git checkout gh-pages
 git pull || true
 git reset --hard origin/gh-pages
-git merge --strategy theirs "$SOURCE_BRANCH" -m "Merging $SOURCE_BRANCH"
+git merge --strategy theirs -m "Merging $SOURCE_BRANCH" "$SOURCE_BRANCH"
 
 # start recording changes
 cd "$PROJDIR"
