@@ -1,5 +1,10 @@
 '''
 Expand the code to view.
+
+Run:
+    $ python simple.py
+    <class '__main__.HasADate'>: {"d": "2020-05-28T02:46:05", "i": 2}
+    <class '__main__.Point'>: {"x": 21, "y": 12}
 '''
 from dataclasses import dataclass
 from datetime import datetime
