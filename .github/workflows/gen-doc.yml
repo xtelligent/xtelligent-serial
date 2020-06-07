@@ -33,7 +33,7 @@ jobs:
         git pull || true
         git reset --hard origin/gh-pages
         git checkout "$SOURCE_BRANCH" -- examples/** tooling/** xtelligent_serial/** README.md LICENSE
-        git merge --strategy recursive --strategy-option theirs -m "Merging $SOURCE_BRANCH" "$SOURCE_BRANCH"
+        # git merge --strategy recursive --strategy-option theirs -m "Merging $SOURCE_BRANCH" "$SOURCE_BRANCH"
         # start recording changes
         cd "$PROJDIR"
         OUTDIR="./docs"
