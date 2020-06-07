@@ -21,6 +21,7 @@ def from_json(type: Type, json_text: str, **kwargs) -> JSONSerializable:
 
     Example:
         >>> from xtelligent_serial import serialization
+        >>> from xtelligent_serial.json import from_json
         >>> @serialization
             class Boo:
                 def __init__(self, x):
