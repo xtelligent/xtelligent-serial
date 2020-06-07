@@ -13,11 +13,11 @@ other formats.
 
 ## Documentation
 
-[API Reference](docs/xtelligent_serial/index.html)
+[API Reference](https://xtelligent.github.io/xtelligent-serial/docs/xtelligent_serial/)
 
 ## Example
 
-[Source Code](docs/examples/index.html)
+[Source Code](https://xtelligent.github.io/xtelligent-serial/docs/index.html)
 
 Run it!
 
