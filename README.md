@@ -17,7 +17,7 @@ other formats.
 
 ## Example
 
-[Source Code](https://xtelligent.github.io/xtelligent-serial/docs/index.html)
+[Source Code](https://xtelligent.github.io/xtelligent-serial/docs/examples/)
 
 Run it!
 
