@@ -7,15 +7,15 @@ if [ "$1" = "--build" ]; then
     docker-compose -f "$MYDIR/docker/compose.yaml" build py
 fi
 PROJDIR="$(cd "$MYDIR/.." && pwd)"
-TEMPDIR="$PROJDIR/.tmp/doc"
-rm -rf "$TEMPDIR" || true
-mkdir -p "$TEMPDIR"
+DOCDIR="$PROJDIR/docs"
+rm -rf "$DOCDIR" || true
+mkdir -p "$DOCDIR"
 
 function makedoc {
     docker-compose \
         -f "$MYDIR/docker/compose.yaml" \
         run \
-        -v "$TEMPDIR:/var/doc" \
+        -v "$DOCDIR:/var/doc" \
         -e "PYTHONWARNINGS=error::UserWarning" \
         py \
         pdoc \

@@ -23,6 +23,19 @@ jobs:
         pip install pdoc3
         export PYTHONPATH="$PYTHONPATH:$(pwd)"
         export PYTHONWARNINGS="error::UserWarning"
-        OUTDIR="./.tmp/doc"
+        MYDIR="$(cd "$(dirname "$0")" && pwd)"
+        PROJDIR="$(cd "$MYDIR/.." && pwd)"
+        SOURCE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+        # get on the branch we want.
+        git checkout gh-pages
+        git pull || true
+        git reset --hard origin/gh-pages
+        git merge --strategy recursive theirs -m "Merging $SOURCE_BRANCH" "$SOURCE_BRANCH"
+        # start recording changes
+        cd "$PROJDIR"
+        OUTDIR="./docs"
         mkdir -p "$OUTDIR"
         pdoc --html --output-dir "$OUTDIR" xtelligent_serial examples
+        git add docs
+        git commit -m "Generated documentation."
+        git push
