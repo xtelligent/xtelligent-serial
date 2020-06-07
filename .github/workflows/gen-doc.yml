@@ -28,6 +28,7 @@ jobs:
         set -x
         SOURCE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
         # get on the branch we want.
+        git pull # Need all branches
         git checkout gh-pages
         git pull || true
         git reset --hard origin/gh-pages
