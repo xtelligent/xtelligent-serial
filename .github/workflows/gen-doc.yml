@@ -20,8 +20,7 @@ jobs:
     - name: Install dependencies and run pdoc
       run: |
         python -m pip install --upgrade pip
-        pip install setuptools pylint pytest
-        python --version
+        pip install pdoc3
         export PYTHONPATH="$PYTHONPATH:$(pwd)"
         export PYTHONWARNINGS="error::UserWarning"
         pdoc --html --output-dir /var/doc xtelligent_serial examples
