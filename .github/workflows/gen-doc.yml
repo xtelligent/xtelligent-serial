@@ -37,8 +37,8 @@ jobs:
         # start recording changes
         OUTDIR="./docs"
         mkdir -p "$OUTDIR"
-        pdoc --html --output-dir "$OUTDIR" xtelligent_serial examples
-        git status
+        pdoc --html --output-dir "$OUTDIR" xtelligent_serial examples || true
+        pwd && ls -la
         git add --all
         git commit -m "Generated documentation."
         git push
