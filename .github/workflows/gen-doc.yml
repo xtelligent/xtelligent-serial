@@ -36,6 +36,7 @@ jobs:
         git status
         # start recording changes
         OUTDIR="./docs"
+        rm -rf docs || true
         mkdir -p "$OUTDIR"
         pdoc --html --output-dir "$OUTDIR" xtelligent_serial examples || true
         git status
