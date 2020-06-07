@@ -25,6 +25,7 @@ jobs:
         export PYTHONWARNINGS="error::UserWarning"
         MYDIR="$(cd "$(dirname "$0")" && pwd)"
         PROJDIR="$(cd "$MYDIR/.." && pwd)"
+        set -x
         SOURCE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
         # get on the branch we want.
         git checkout gh-pages
