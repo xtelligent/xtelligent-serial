@@ -10,7 +10,7 @@ SOURCE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 git checkout gh-pages
 git pull || true
 git reset --hard origin/gh-pages
-git merge --strategy theirs "$SOURCE_BRANCH"
+git merge --strategy theirs "$SOURCE_BRANCH" -m "Merging $SOURCE_BRANCH"
 
 # start recording changes
 cd "$PROJDIR"
