@@ -1,3 +1,6 @@
+'''
+Expand the code to view.
+'''
 from dataclasses import dataclass
 from datetime import datetime
 

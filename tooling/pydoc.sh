@@ -12,13 +12,14 @@ rm -rf "$TEMPDIR" || true
 mkdir -p "$TEMPDIR"
 
 function makedoc {
-    # docker-compose -f "$MYDIR/docker/compose.yaml" run py pydoc-html "$1" > "$TEMPDIR/$1.html"
     docker-compose \
         -f "$MYDIR/docker/compose.yaml" \
         run \
         -v "$TEMPDIR:/var/doc" \
         -e "PYTHONWARNINGS=error::UserWarning" \
-        py pdoc --html --output-dir /var/doc "$@"
+        py \
+        pdoc \
+        --html --output-dir /var/doc \
+        "$@"
 }
 makedoc xtelligent_serial examples
-# makedoc xtelligent_serial.json
