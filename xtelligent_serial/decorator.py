@@ -9,7 +9,7 @@ from .signatures import Serializer, Deserializer
 def serializer(type: Type):
     '''Decorator that registers a function as a serializer for a type.
 
-    See:`examples.simple.dthandler`
+    See:`examples.simple`
     '''
     def wrapper(func: Serializer):
         update_wrapper(wrapper, func)
@@ -20,7 +20,7 @@ def serializer(type: Type):
 def deserializer(type: Type):
     '''Decorator that registers a function as a deserializer for a type.
 
-    See:`examples.simple.str2dt`
+    See:`examples.simple`
     '''
     def wrapper(func: Deserializer):
         update_wrapper(wrapper, func)
@@ -31,7 +31,7 @@ def deserializer(type: Type):
 def serialization(Cls):
     '''Marks a class for serialization.
 
-    See:`examples.simple.Point`
+    See:`examples.simple`
     '''
     # pylint: disable=unnecessary-lambda
     register_serializer(Cls, lambda raw_data: Cls.__serializer__(raw_data))
