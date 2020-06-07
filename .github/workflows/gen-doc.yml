@@ -1,0 +1,46 @@
+name: Generate Documentation
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies and run pdoc
+      run: |
+        python -m pip install --upgrade pip
+        pip install pdoc3
+        export PYTHONPATH="$PYTHONPATH:$(pwd)"
+        export PYTHONWARNINGS="error::UserWarning"
+        MYDIR="$(cd "$(dirname "$0")" && pwd)"
+        PROJDIR="$(cd "$MYDIR/.." && pwd)"
+        set -x
+        SOURCE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+        # get on the branch we want.
+        git pull # Need all branches
+        git checkout gh-pages
+        git pull || true
+        git reset --hard origin/gh-pages
+        git checkout "$SOURCE_BRANCH" -- examples/** tooling/** xtelligent_serial/** README.md LICENSE
+        git status
+        # start recording changes
+        OUTDIR="./docs"
+        mkdir -p "$OUTDIR"
+        pdoc --html --output-dir "$OUTDIR" xtelligent_serial examples || true
+        pwd && ls -la ./docs
+        git add --all
+        git config --global user.email "development@xtelligent.io"
+        git config --global user.name "Development Team"
+        git commit -m "Generated documentation."
+        git push
