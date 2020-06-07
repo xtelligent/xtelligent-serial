@@ -6,8 +6,11 @@ from .signatures import Serializer, Deserializer
 
 # pylint: disable=invalid-name,redefined-builtin
 
-
 def serializer(type: Type):
+    '''Decorator that registers a function as a serializer for a type.
+
+    See:`examples.simple.dthandler`
+    '''
     def wrapper(func: Serializer):
         update_wrapper(wrapper, func)
         register_serializer(type, func)
@@ -15,6 +18,10 @@ def serializer(type: Type):
     return wrapper
 
 def deserializer(type: Type):
+    '''Decorator that registers a function as a deserializer for a type.
+
+    See:`examples.simple.str2dt`
+    '''
     def wrapper(func: Deserializer):
         update_wrapper(wrapper, func)
         register_deserializer(type, func)
@@ -22,6 +29,10 @@ def deserializer(type: Type):
     return wrapper
 
 def serialization(Cls):
+    '''Marks a class for serialization.
+
+    See:`examples.simple.Point`
+    '''
     # pylint: disable=unnecessary-lambda
     register_serializer(Cls, lambda raw_data: Cls.__serializer__(raw_data))
     register_deserializer(Cls, lambda raw_data: Cls.__deserializer__(raw_data))

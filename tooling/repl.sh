@@ -6,4 +6,4 @@ if [ "$2" = "--build" ]; then
     docker-compose -f "$MYDIR/docker/compose.yaml" kill py
     docker-compose -f "$MYDIR/docker/compose.yaml" build py
 fi
-docker-compose -f "$MYDIR/docker/compose.yaml" run --rm py pytest tests
+docker-compose -f "$MYDIR/docker/compose.yaml" run py python
