@@ -11,6 +11,10 @@ primitives may be easily serialized to JSON using `python.json` or this library.
 Because the library focuses on primitives, it could be useful for serialization to
 other formats.
 
+## Documentation
+
+[API Reference](docs/xtelligent_serial/index.html)
+
 ## Example
 
 [Source Code](docs/examples/index.html)
