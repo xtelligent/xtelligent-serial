@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -19,6 +19,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies + lint + test
       run: |
+        tooling/ensure-version-py.sh
         python -m pip install --upgrade pip
         pip install setuptools pylint pytest
         python --version
@@ -37,17 +38,19 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
+      if: ${{ success() }}
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
+      if: ${{ success() }}
       run: |
-        tooling/ensure-version-py.sh
         python -m pip install --upgrade pip
         pip install setuptools wheel twine
         python --version
         python -m twine -h
     - name: Build and publish
+      if: ${{ success() }}
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
@@ -73,10 +76,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
+      if: ${{ success() }}
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies and run pdoc
+      if: ${{ success() }}
       env:
         BUILDNUMBER: ${{ github.run_number }}
       run: |
