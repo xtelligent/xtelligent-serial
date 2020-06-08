@@ -30,6 +30,8 @@ jobs:
         pytest tests
 
   deploy:
+    needs: [test]
+    if: ${{ success() }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -68,6 +70,8 @@ jobs:
         python -m twine upload dist/*
 
   document:
+    needs: [test, deploy]
+    if: ${{ success() }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
