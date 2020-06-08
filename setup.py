@@ -1,6 +1,6 @@
 import setuptools
 import os
-from config import MAJOR_VERSION, MINOR_VERSION
+from version import MAJOR_VERSION, MINOR_VERSION
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
