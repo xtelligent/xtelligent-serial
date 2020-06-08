@@ -105,7 +105,7 @@ def test_reversable_serialization():
     assert final.z == b.z
 
 
-@dataclass
+@dataclass(frozen=True)
 class SpaceTimeClass:
     d: datetime
     x: float

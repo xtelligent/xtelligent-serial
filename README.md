@@ -37,6 +37,19 @@ and from JSON. The `from_json` and `to_json` functions are documented
 [here](https://xtelligent.github.io/xtelligent-serial/docs/xtelligent_serial/json/index.html). The
 functions serialize types that your code supports with the serialization decorators.
 
+## Automatic `dataclass` support
+
+Python's `dataclass` with the `frozen` option creates the rough equivalent of a `NamedTuple`, but you
+may still add methods and properties. Immutability is a great practice for creating testable,
+readable code. A frozen `dataclass` does not acquire the "infinite state machine" behaviors common
+to object-oriented class design. It is beyond the scope of this document to create full justification
+of immutability, and there is an abundance of material on this subject. It is obvious that a frozen
+`dataclass` maps very well to JSON documents. The consistent structure of `dataclass` types make it
+straightforward for this library to support these classes automatically, without decorators. The only
+caveat is that all member attribute types must be supported by decorators, or they must also be
+primitive or `dataclass` types. Again, please see the
+[example](https://xtelligent.github.io/xtelligent-serial/docs/examples/simple.html) to illustrate.
+
 ## Documentation
 
 [API Reference](https://xtelligent.github.io/xtelligent-serial/docs/xtelligent_serial/)
@@ -52,3 +65,4 @@ to the `json` module.
 * Serialization convenience methods on the decorators.
 * Support for automatic deserialization. Right now, it is required to pass a parameter indicating
 the type to deserialize to.
+* Research automatic support for NamedTuple.

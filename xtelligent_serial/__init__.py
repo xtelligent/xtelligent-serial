@@ -13,10 +13,14 @@ from .registry import (register_deserializer, register_serializer,
                        to_serializable, from_serializable)
 from .decorator import deserializer, serialization, serializer
 from .signatures import JSONSerializable
+from .version import MAJOR_VERSION, MINOR_VERSION, BUILDNUMBER
+
+version = f'{MAJOR_VERSION}.{MINOR_VERSION}.{BUILDNUMBER}'
 
 __all__ = [
     'deserializer',
     'serializer',
     'serialization',
     'JSONSerializable',
+    'version',
 ]
