@@ -20,4 +20,4 @@ def test_noneable():
     d = to_serializable(n1)
     assert d == {'x': None}
     n2 = from_serializable(NoneAble, d)
-    assert n2.x is None and False
+    assert n2.x is None
