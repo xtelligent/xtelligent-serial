@@ -36,11 +36,13 @@ jobs:
         git status
         # start recording changes
         OUTDIR="./docs"
+        rm -rf docs || true
         mkdir -p "$OUTDIR"
         pdoc --html --output-dir "$OUTDIR" xtelligent_serial examples || true
-        pwd && ls -la ./docs
+        git status
         git add --all
         git config --global user.email "development@xtelligent.io"
         git config --global user.name "Development Team"
         git commit -m "Generated documentation."
         git push
+        false
