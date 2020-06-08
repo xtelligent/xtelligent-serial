@@ -1,14 +1,17 @@
 import setuptools
 import os
+from version import MAJOR_VERSION, MINOR_VERSION
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 buildnumber = os.environ.get('BUILDNUMBER') or 1
+version = f'{MAJOR_VERSION}.{MINOR_VERSION}.{buildnumber}'
+print('version:', version)
 
 setuptools.setup(
     name="xtelligent-serial", # Replace with your own username
-    version='0.0.{0}'.format(buildnumber),
+    version=version,
     author="Xtelligent",
     author_email="development@xtelligent.io",
     description="Python object serialization focused on JSON",

@@ -25,7 +25,7 @@ def str2dt(datestr: str):
     return datetime.fromisoformat(datestr)
 
 
-@dataclass
+@dataclass(frozen=True)
 class HasADate:
     d: datetime
     i: int
