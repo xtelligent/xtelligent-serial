@@ -45,4 +45,3 @@ jobs:
         git config --global user.name "Development Team"
         git commit -m "Generated documentation."
         git push
-        false
