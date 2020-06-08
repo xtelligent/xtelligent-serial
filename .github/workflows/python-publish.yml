@@ -99,8 +99,7 @@ jobs:
         git checkout gh-pages
         git pull || true
         git reset --hard origin/gh-pages
-        git checkout "$SOURCE_BRANCH" -- examples/** tooling/** xtelligent_serial/** README.md LICENSE
-        ls -la tooling/
+        git checkout "$SOURCE_BRANCH" -- examples/** tooling/ensure-version-py.sh xtelligent_serial/** README.md LICENSE config
         tooling/ensure-version-py.sh
         git status
         # start recording changes
