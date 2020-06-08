@@ -47,6 +47,7 @@ def from_json(type: Type, json_text: str, **kwargs) -&gt; JSONSerializable:
 
     Example:
         &gt;&gt;&gt; from xtelligent_serial import serialization
+        &gt;&gt;&gt; from xtelligent_serial.json import from_json
         &gt;&gt;&gt; @serialization
             class Boo:
                 def __init__(self, x):
@@ -80,6 +81,7 @@ def from_json(type: Type, json_text: str, **kwargs) -&gt; JSONSerializable:
 <div class="desc"><p>Deserializes a JSONSerializable instance from JSON.</p>
 <h2 id="example">Example</h2>
 <pre><code class="python">&gt;&gt;&gt; from xtelligent_serial import serialization
+&gt;&gt;&gt; from xtelligent_serial.json import from_json
 &gt;&gt;&gt; @serialization
     class Boo:
         def __init__(self, x):
@@ -104,6 +106,7 @@ def from_json(type: Type, json_text: str, **kwargs) -&gt; JSONSerializable:
 
     Example:
         &gt;&gt;&gt; from xtelligent_serial import serialization
+        &gt;&gt;&gt; from xtelligent_serial.json import from_json
         &gt;&gt;&gt; @serialization
             class Boo:
                 def __init__(self, x):
