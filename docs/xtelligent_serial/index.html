@@ -48,12 +48,16 @@ from .registry import (register_deserializer, register_serializer,
                        to_serializable, from_serializable)
 from .decorator import deserializer, serialization, serializer
 from .signatures import JSONSerializable
+from .version import MAJOR_VERSION, MINOR_VERSION, BUILDNUMBER
+
+version = f&#39;{MAJOR_VERSION}.{MINOR_VERSION}.{BUILDNUMBER}&#39;
 
 __all__ = [
     &#39;deserializer&#39;,
     &#39;serializer&#39;,
     &#39;serialization&#39;,
     &#39;JSONSerializable&#39;,
+    &#39;version&#39;,
 ]</code></pre>
 </details>
 </section>
@@ -73,6 +77,10 @@ __all__ = [
 <div class="desc"></div>
 </dd>
 <dt><code class="name"><a title="xtelligent_serial.signatures" href="signatures.html">xtelligent_serial.signatures</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="xtelligent_serial.version" href="version.html">xtelligent_serial.version</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -165,6 +173,7 @@ __all__ = [
 <li><code><a title="xtelligent_serial.json" href="json/index.html">xtelligent_serial.json</a></code></li>
 <li><code><a title="xtelligent_serial.registry" href="registry.html">xtelligent_serial.registry</a></code></li>
 <li><code><a title="xtelligent_serial.signatures" href="signatures.html">xtelligent_serial.signatures</a></code></li>
+<li><code><a title="xtelligent_serial.version" href="version.html">xtelligent_serial.version</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>

@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
-<title>examples.simple API documentation</title>
-<meta name="description" content="Expand the code to view …" />
+<title>xtelligent_serial.version API documentation</title>
+<meta name="description" content="" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -17,83 +17,18 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>examples.simple</code></h1>
+<h1 class="title">Module <code>xtelligent_serial.version</code></h1>
 </header>
 <section id="section-intro">
-<p>Expand the code to view.</p>
-<h2 id="run">Run</h2>
-<p>$ python simple.py
-<class '__main__.HasADate'>: {"d": "2020-05-28T02:46:05", "i": 2}
-<class '__main__.Point'>: {"x": 21, "y": 12}</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">&#39;&#39;&#39;
-Expand the code to view.
-
-Run:
-    $ python simple.py
-    &lt;class &#39;__main__.HasADate&#39;&gt;: {&#34;d&#34;: &#34;2020-05-28T02:46:05&#34;, &#34;i&#34;: 2}
-    &lt;class &#39;__main__.Point&#39;&gt;: {&#34;x&#34;: 21, &#34;y&#34;: 12}
-&#39;&#39;&#39;
-from dataclasses import dataclass
-from datetime import datetime
-
-from xtelligent_serial import deserializer, serializer, serialization
-from xtelligent_serial.json import to_json, from_json
-
-# pylint: disable=not-callable
-
-
-@serializer(datetime)
-def dthandler(dt: datetime):
-    return dt.isoformat()
-
-
-@deserializer(datetime)
-def str2dt(datestr: str):
-    return datetime.fromisoformat(datestr)
-
-
-@dataclass(frozen=True)
-class HasADate:
-    d: datetime
-    i: int
-
-
-def try_serialization(f):
-    json = to_json(f)
-    cls = f.__class__
-    print(f&#39;{cls}:&#39;, json)
-    s = from_json(cls, json)
-    return f, s
-
-
-first_instance, second_instance = try_serialization(
-    HasADate(datetime.utcfromtimestamp(1590633965), 2))
-assert first_instance.d == second_instance.d
-assert first_instance.i == second_instance.i
-
-
-@serialization
-class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    @classmethod
-    def __serializer__(cls, instance):
-        return {&#39;x&#39;: instance.x, &#39;y&#39;: instance.y}
-
-    @classmethod
-    def __deserializer__(cls, raw_data):
-        return cls(raw_data[&#39;x&#39;], raw_data[&#39;y&#39;])
-
-
-first_instance, second_instance = try_serialization(Point(21, 12))
-assert first_instance.x == second_instance.x
-assert first_instance.y == second_instance.y</code></pre>
+<pre><code class="python"># This file must be compatible with python and bash
+# pylint: disable=bad-whitespace
+MAJOR_VERSION=1
+MINOR_VERSION=0
+BUILDNUMBER=35</code></pre>
 </details>
 </section>
 <section>
@@ -101,98 +36,8 @@ assert first_instance.y == second_instance.y</code></pre>
 <section>
 </section>
 <section>
-<h2 class="section-title" id="header-functions">Functions</h2>
-<dl>
-<dt id="examples.simple.dthandler"><code class="name flex">
-<span>def <span class="ident">dthandler</span></span>(<span>dt: datetime.datetime)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@serializer(datetime)
-def dthandler(dt: datetime):
-    return dt.isoformat()</code></pre>
-</details>
-</dd>
-<dt id="examples.simple.str2dt"><code class="name flex">
-<span>def <span class="ident">str2dt</span></span>(<span>datestr: str)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@deserializer(datetime)
-def str2dt(datestr: str):
-    return datetime.fromisoformat(datestr)</code></pre>
-</details>
-</dd>
-<dt id="examples.simple.try_serialization"><code class="name flex">
-<span>def <span class="ident">try_serialization</span></span>(<span>f)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def try_serialization(f):
-    json = to_json(f)
-    cls = f.__class__
-    print(f&#39;{cls}:&#39;, json)
-    s = from_json(cls, json)
-    return f, s</code></pre>
-</details>
-</dd>
-</dl>
 </section>
 <section>
-<h2 class="section-title" id="header-classes">Classes</h2>
-<dl>
-<dt id="examples.simple.HasADate"><code class="flex name class">
-<span>class <span class="ident">HasADate</span></span>
-<span>(</span><span>d: datetime.datetime, i: int)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>HasADate(d: datetime.datetime, i: int)</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class HasADate:
-    d: datetime
-    i: int</code></pre>
-</details>
-</dd>
-<dt id="examples.simple.Point"><code class="flex name class">
-<span>class <span class="ident">Point</span></span>
-<span>(</span><span>x, y)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    @classmethod
-    def __serializer__(cls, instance):
-        return {&#39;x&#39;: instance.x, &#39;y&#39;: instance.y}
-
-    @classmethod
-    def __deserializer__(cls, raw_data):
-        return cls(raw_data[&#39;x&#39;], raw_data[&#39;y&#39;])</code></pre>
-</details>
-</dd>
-</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -203,24 +48,7 @@ def str2dt(datestr: str):
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="examples" href="index.html">examples</a></code></li>
-</ul>
-</li>
-<li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="">
-<li><code><a title="examples.simple.dthandler" href="#examples.simple.dthandler">dthandler</a></code></li>
-<li><code><a title="examples.simple.str2dt" href="#examples.simple.str2dt">str2dt</a></code></li>
-<li><code><a title="examples.simple.try_serialization" href="#examples.simple.try_serialization">try_serialization</a></code></li>
-</ul>
-</li>
-<li><h3><a href="#header-classes">Classes</a></h3>
-<ul>
-<li>
-<h4><code><a title="examples.simple.HasADate" href="#examples.simple.HasADate">HasADate</a></code></h4>
-</li>
-<li>
-<h4><code><a title="examples.simple.Point" href="#examples.simple.Point">Point</a></code></h4>
-</li>
+<li><code><a title="xtelligent_serial" href="index.html">xtelligent_serial</a></code></li>
 </ul>
 </li>
 </ul>
