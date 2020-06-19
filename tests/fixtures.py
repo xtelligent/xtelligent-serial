@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 
 import pytest
-from xtelligent_serial import (deserializer, serializer, serialization)
+from xtelligent_serial import (deserializer, serializer,
+                               serialization, SequenceOf)
+from xtelligent_serial.json import to_json
 
 
 @serialization
@@ -19,7 +21,7 @@ class Boo:
 
     @classmethod
     def __deserializer__(cls, raw_data):
-        return cls(raw_data['x']) # pylint: disable=not-callable
+        return cls(raw_data['x'])  # pylint: disable=not-callable
 
 
 class Yah:
@@ -45,18 +47,22 @@ def deserialize_yah(raw_data) -> Yah:
 class NoneAble:
     x: object
 
+
 @dataclass
 class CA:
     a: int
+
 
 @dataclass
 class CB:
     ca: CA
 
+
 @dataclass
 class DeepClass:
     n: NoneAble
     cb: CB
+
 
 @pytest.fixture
 def deep_json():
@@ -66,3 +72,17 @@ def deep_json():
     "cb": {"ca": {"a": 2112}}
 }
     '''
+
+
+@dataclass
+class DCContainer:
+    items: SequenceOf[DeepClass]
+
+
+@pytest.fixture
+def container_class_json():
+    dcc = DCContainer([
+        DeepClass(NoneAble(None), CB(CA(100))),
+        DeepClass(NoneAble(5.5), CB(CA(101))),
+    ])
+    return to_json(dcc)

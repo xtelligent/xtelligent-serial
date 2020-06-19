@@ -12,6 +12,7 @@ from .data_class import DataClassProxy
 from .registry import (register_deserializer, register_serializer,
                        serialize, deserialize)
 from .decorator import deserializer, serialization, serializer
+from .sequence_of import SequenceOf
 from .signatures import JSONSerializable
 try:
     from .version import MAJOR_VERSION, MINOR_VERSION, BUILDNUMBER
@@ -29,4 +30,5 @@ __all__ = [
     'version',
     'serialize',
     'deserialize',
+    'SequenceOf',
 ]

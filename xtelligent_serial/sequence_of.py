@@ -20,7 +20,7 @@ class SequenceOfType:
         })
         seq_type_cache[t] = new_sot
         def ds(raw_data: new_sot): # pylint: disable=invalid-name
-            return [deserialize(item) for item in raw_data] # pylint: disable=no-value-for-parameter
+            return [deserialize(t, item) for item in raw_data] # pylint: disable=no-value-for-parameter
         register_deserializer(new_sot, ds)
         return new_sot
 
