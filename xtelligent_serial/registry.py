@@ -15,6 +15,10 @@ def props(target):
 
 @singledispatch
 def serialize(target) -> JSONSerializable:
+    '''Serializes an instance of `t` into raw data (dict, list, str, int, etc.).
+    Uses the single dispatch patter to find implemenations of the function for
+    return None if target is None else serialize(props(target))
+    specific types.'''
     return None if target is None else serialize(props(target))
 
 @serialize.register
@@ -63,6 +67,9 @@ def fjd(raw_data: JSONSerializable, **kwargs) -> Any:
 
 
 def deserialize(t: Type, raw_data: JSONSerializable) -> Any:
+    '''Creates an instance of `t` from raw data (dict, list, str, int, etc.).
+    Uses a modified single dispatch pattern to find deserializers.
+    '''
     func = fjd.dispatch(type(raw_data) if t == object else t)
     if not func:
         raise ValueError(f'No deserialization handler for type {t}')

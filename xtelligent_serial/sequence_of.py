@@ -25,3 +25,7 @@ class SequenceOfType:
         return new_sot
 
 SequenceOf = SequenceOfType(object)
+''' In a `dataclass`, tells the (de)serializer to expect a sequence (usually list)
+    of a specific type. `Sequence[SomeClass]` tells the deserializer to read the
+    array and try to deserialize a `SomeClass` instance for each item.
+'''
