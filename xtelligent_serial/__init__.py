@@ -8,13 +8,18 @@ decorator allows a type (class) to serialize itself.
 In the example links, please expand the code in the example documentation. It is best to
 expand the code at the top of the page to see all the decorators in use.
 '''
-
+from .data_class import DataClassProxy
 from .registry import (register_deserializer, register_serializer,
-                       to_serializable, from_serializable)
+                       serialize, deserialize)
 from .decorator import deserializer, serialization, serializer
+from .sequence_of import SequenceOf
 from .signatures import JSONSerializable
-from .version import MAJOR_VERSION, MINOR_VERSION, BUILDNUMBER
-
+try:
+    from .version import MAJOR_VERSION, MINOR_VERSION, BUILDNUMBER
+except: # pylint: disable=bare-except
+    MAJOR_VERSION = 0
+    MINOR_VERSION = 0
+    BUILDNUMBER = 0
 version = f'{MAJOR_VERSION}.{MINOR_VERSION}.{BUILDNUMBER}'
 
 __all__ = [
@@ -23,4 +28,7 @@ __all__ = [
     'serialization',
     'JSONSerializable',
     'version',
+    'serialize',
+    'deserialize',
+    'SequenceOf',
 ]

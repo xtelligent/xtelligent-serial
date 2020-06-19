@@ -3,7 +3,7 @@ from typing import Type
 
 # pylint: disable=redefined-builtin
 
-from .. import to_serializable, from_serializable, JSONSerializable
+from .. import serialize, deserialize, JSONSerializable
 
 def to_json(target: JSONSerializable, **kwargs) -> str:
     '''Serializes the target object to JSON.
@@ -13,7 +13,7 @@ def to_json(target: JSONSerializable, **kwargs) -> str:
         >>> to_json({'x': 1})
         '{"x": 1}'
     '''
-    d = to_serializable(target)
+    d = serialize(target)
     return dumps(d, **kwargs)
 
 def from_json(type: Type, json_text: str, **kwargs) -> JSONSerializable:
@@ -38,4 +38,4 @@ def from_json(type: Type, json_text: str, **kwargs) -> JSONSerializable:
         4
     '''
     d = loads(json_text, **kwargs)
-    return from_serializable(type, d)
+    return deserialize(type, d)
