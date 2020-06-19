@@ -9,7 +9,7 @@ from .signatures import Serializer, Deserializer
 def serializer(type: Type):
     '''Decorator that registers a function as a serializer for a type.
 
-    See:`examples.simple`
+    See:`examples.simple`.
     '''
     def wrapper(func: Serializer):
         update_wrapper(wrapper, func)
@@ -22,7 +22,7 @@ def deserializer(type: Type):
     The decorated function receives a `deserialize` method that takes a single
     argument - the data to deserialize to `type`.
 
-    See:`examples.simple`
+    See:`examples.simple`.
     '''
     def wrapper(func: Deserializer):
         update_wrapper(wrapper, func)
