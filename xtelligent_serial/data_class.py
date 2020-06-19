@@ -6,18 +6,18 @@ from .registry import register_deserializer, deserialize
 
 dispatcher = {}
 
-def ds_dataclass(type, raw_data):
-    type_fields = {f.name:f for f in fields(type)}
+def ds_dataclass(t, raw_data):
+    type_fields = {f.name:f for f in fields(t)}
     kwargs = {k: deserialize(type_fields[k].type, v) for k, v in raw_data.items() if k in type_fields}
-    return type(**kwargs)
+    return t(**kwargs)
 
-def register_specific_type(type: Type):
-    f = dispatcher.get(type)
+def register_specific_type(t: Type):
+    f = dispatcher.get(t)
     if f:
         return f
-    def ds(raw_data):
-        return ds_dataclass(type, raw_data)
-    dispatcher[type] = ds
+    def ds(raw_data): # pylint: disable=invalid-name
+        return ds_dataclass(t, raw_data)
+    dispatcher[t] = ds
     return ds
 
 class DataClassProxy(ABC):
@@ -29,12 +29,12 @@ class DataClassProxy(ABC):
         return False
 
 def ds_hook(raw_data, **kwargs): # check kwargs for type and dispatch accordingly.
-    type = kwargs.get('type')
-    if not type:
+    t = kwargs.get('type')
+    if not t:
         raise ValueError('No type argument supplied')
-    f = dispatcher.get(type)
+    f = dispatcher.get(t)
     if not f:
-        raise NotImplementedError(f'No serializer for type {type}')
+        raise NotImplementedError(f'No serializer for type {t}')
     return f(raw_data)
 
 

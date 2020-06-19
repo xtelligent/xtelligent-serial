@@ -5,7 +5,7 @@ from .registry import register_deserializer, deserialize
 
 seq_type_cache = {}
 
-@dataclass(frozen=True,eq=True,repr=True)
+@dataclass(frozen=True, eq=True, repr=True)
 class SequenceOfType:
     type: Type
 
@@ -13,14 +13,14 @@ class SequenceOfType:
         sot = seq_type_cache.get(t, None)
         if sot:
             return sot
-        def initializer(self, **kwargs):
+        def initializer(self, **kwargs): # pylint: disable=unused-argument
             SequenceOfType.__init__(self, t)
         new_sot = type(f'SequenceOfType[{t}]', (SequenceOfType,), {
             '__init__': initializer
         })
         seq_type_cache[t] = new_sot
-        def ds(raw_data: new_sot):
-            return [deserialize(item) for item in raw_data]
+        def ds(raw_data: new_sot): # pylint: disable=invalid-name
+            return [deserialize(item) for item in raw_data] # pylint: disable=no-value-for-parameter
         register_deserializer(new_sot, ds)
         return new_sot
 

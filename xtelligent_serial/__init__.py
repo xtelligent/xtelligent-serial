@@ -15,7 +15,7 @@ from .decorator import deserializer, serialization, serializer
 from .signatures import JSONSerializable
 try:
     from .version import MAJOR_VERSION, MINOR_VERSION, BUILDNUMBER
-except:
+except: # pylint: disable=bare-except
     MAJOR_VERSION = 0
     MINOR_VERSION = 0
     BUILDNUMBER = 0

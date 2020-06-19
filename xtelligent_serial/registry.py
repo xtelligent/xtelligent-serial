@@ -1,11 +1,11 @@
-from collections.abc import Sequence, Iterable, Collection, Mapping
+from collections.abc import Sequence, Iterable, Mapping
 from functools import singledispatch
 from inspect import ismethod, isfunction, signature
 from typing import Any, Type
 
 from .signatures import JSONSerializable, Serializer, Deserializer
 
-# pylint: disable=redefined-builtin
+# pylint: disable=redefined-builtin, unused-argument
 
 def iscallable(v):
     return ismethod(v) or isfunction(v)
@@ -56,7 +56,7 @@ TYPEKEY = '?__type__?'
 def fjd(raw_data: JSONSerializable, **kwargs) -> Any:
     if raw_data is None:
         return None
-    t = raw_data.get(TYPEKEY) or type(object)
+    # t = raw_data.get(TYPEKEY) or type(object)
     # if is_dataclass(t):
     #     return fjd_for_dataclass(t, raw_data)
     raise ValueError(f'No deserialization method for {raw_data}')
@@ -94,7 +94,7 @@ def register_serializer(type: Type, func: Serializer):
 def register_deserializer(type: Type, func: Deserializer):
     assert isfunction(func)
     sig = signature(func)
-    def f1(raw_data, **kwargs):
+    def f1(raw_data, **kwargs): # pylint: disable=invalid-name
         return func(raw_data)
     f = func if len(sig.parameters) == 2 else f1
     @fjd.register

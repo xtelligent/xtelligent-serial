@@ -1,8 +1,8 @@
 from functools import update_wrapper
 from typing import Type
 
-from .registry import register_deserializer, register_serializer, serialize, deserialize
-from .signatures import Serializer, Deserializer, JSONSerializable
+from .registry import register_deserializer, register_serializer, deserialize
+from .signatures import Serializer, Deserializer
 
 # pylint: disable=invalid-name,redefined-builtin
 
