@@ -16,7 +16,7 @@ def props(target):
 @singledispatch
 def serialize(target) -> JSONSerializable:
     '''Serializes an instance of `t` into raw data (dict, list, str, int, etc.).
-    Uses the single dispatch patter to find implemenations of the function for
+    Uses the single dispatch pattern to find implementations of the function for
     return None if target is None else serialize(props(target))
     specific types.'''
     return None if target is None else serialize(props(target))
