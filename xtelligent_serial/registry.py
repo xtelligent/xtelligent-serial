@@ -59,17 +59,16 @@ def fjd(raw_data: JSONSerializable, **kwargs) -> Any:
     # t = raw_data.get(TYPEKEY) or type(object)
     # if is_dataclass(t):
     #     return fjd_for_dataclass(t, raw_data)
-    raise ValueError(f'No deserialization method for {raw_data}')
+    raise ValueError('No deserialization method for {0}'.format(kwargs.get('type') or type(raw_data)))
 
 
-
-def deserialize(type: Type, raw_data: JSONSerializable) -> Any:
-    func = fjd.dispatch(type)
+def deserialize(t: Type, raw_data: JSONSerializable) -> Any:
+    func = fjd.dispatch(type(raw_data) if t == object else t)
     if not func:
-        raise ValueError(f'No deserialization handler for type {type}')
+        raise ValueError(f'No deserialization handler for type {t}')
     if isinstance(raw_data, Mapping): # Assume dict:object, never list!
-        return func({**raw_data, TYPEKEY: type}, type=type)
-    return func(raw_data, type=type)
+        return func({**raw_data, TYPEKEY: t}, type=t)
+    return func(raw_data, type=t)
 
 @fjd.register
 def _(i: int, **kwargs):

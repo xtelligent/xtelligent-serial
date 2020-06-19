@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+
+import pytest
 from xtelligent_serial import (deserializer, serializer, serialization)
 
 
@@ -42,3 +44,25 @@ def deserialize_yah(raw_data) -> Yah:
 @dataclass
 class NoneAble:
     x: object
+
+@dataclass
+class CA:
+    a: int
+
+@dataclass
+class CB:
+    ca: CA
+
+@dataclass
+class DeepClass:
+    n: NoneAble
+    cb: CB
+
+@pytest.fixture
+def deep_json():
+    return '''
+{
+    "n": {"x": "hello"},
+    "cb": {"ca": {"a": 2112}}
+}
+    '''
