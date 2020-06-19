@@ -1,12 +1,11 @@
 from collections.abc import Sequence, Iterable, Mapping
-from dataclasses import is_dataclass, fields
 from functools import singledispatch
-from inspect import ismethod, isfunction
+from inspect import ismethod, isfunction, signature
 from typing import Any, Type
 
 from .signatures import JSONSerializable, Serializer, Deserializer
 
-# pylint: disable=redefined-builtin
+# pylint: disable=redefined-builtin, unused-argument
 
 def iscallable(v):
     return ismethod(v) or isfunction(v)
@@ -15,81 +14,95 @@ def props(target):
     return {k: v for k, v in [(k, getattr(target, k)) for k in dir(target) if not k.startswith('_')] if not iscallable(v)}
 
 @singledispatch
-def to_serializable(target) -> JSONSerializable:
-    return None if target is None else to_serializable(props(target))
+def serialize(target) -> JSONSerializable:
+    '''Serializes an instance of `t` into raw data (dict, list, str, int, etc.).
+    Uses the single dispatch patter to find implemenations of the function for
+    return None if target is None else serialize(props(target))
+    specific types.'''
+    return None if target is None else serialize(props(target))
 
-@to_serializable.register
+@serialize.register
 def _(target: Mapping) -> JSONSerializable:
-    return {k: to_serializable(v) for k, v in target.items()}
+    return {k: serialize(v) for k, v in target.items()}
 
-@to_serializable.register
+@serialize.register
 def _(target: Sequence) -> JSONSerializable:
-    return [to_serializable(item) for item in list(target)]
+    return [serialize(item) for item in list(target)]
 
-@to_serializable.register
+@serialize.register
 def _(target: Iterable) -> JSONSerializable:
-    return [to_serializable(item) for item in target]
+    return [serialize(item) for item in target]
 
-@to_serializable.register
+@serialize.register
 def _(target: int) -> JSONSerializable:
     return target
 
-@to_serializable.register
+@serialize.register
 def _(target: float) -> JSONSerializable:
     return target
 
-@to_serializable.register
+@serialize.register
 def _(target: bool) -> JSONSerializable:
     return target
 
-@to_serializable.register
+@serialize.register
 def _(target: str) -> JSONSerializable:
     return target
 
 TYPEKEY = '?__type__?'
 
-def fjd_for_dataclass(type, raw_data):
-    type_fields = {f.name:f for f in fields(type)}
-    kwargs = {k: from_serializable(type_fields[k].type, v) for k, v in raw_data.items() if k in type_fields}
-    return type(**kwargs)
+# def fjd_for_dataclass(type, raw_data):
+#     type_fields = {f.name:f for f in fields(type)}
+#     kwargs = {k: deserialize(type_fields[k].type, v) for k, v in raw_data.items() if k in type_fields}
+#     return type(**kwargs)
 
 @singledispatch
-def fjd(raw_data: JSONSerializable) -> Any:
+def fjd(raw_data: JSONSerializable, **kwargs) -> Any:
     if raw_data is None:
         return None
-    t = raw_data.get(TYPEKEY) or type(object)
-    if is_dataclass(t):
-        return fjd_for_dataclass(t, raw_data)
-    raise ValueError(f'No deserialization method for {raw_data}')
+    # t = raw_data.get(TYPEKEY) or type(object)
+    # if is_dataclass(t):
+    #     return fjd_for_dataclass(t, raw_data)
+    raise ValueError('No deserialization method for {0}'.format(kwargs.get('type') or type(raw_data)))
 
-def from_serializable(type: Type, raw_data: JSONSerializable) -> Any:
-    func = fjd.dispatch(type)
+
+def deserialize(t: Type, raw_data: JSONSerializable) -> Any:
+    '''Creates an instance of `t` from raw data (dict, list, str, int, etc.).
+    Uses a modified single dispatch pattern to find deserializers.
+    '''
+    func = fjd.dispatch(type(raw_data) if t == object else t)
     if not func:
-        raise ValueError(f'No deserialization handler for type {type}')
-    return func(raw_data) if not isinstance(raw_data, Mapping) else func({**raw_data, TYPEKEY: type})
+        raise ValueError(f'No deserialization handler for type {t}')
+    if isinstance(raw_data, Mapping): # Assume dict:object, never list!
+        return func({**raw_data, TYPEKEY: t}, type=t)
+    return func(raw_data, type=t)
 
 @fjd.register
-def _(i: int):
+def _(i: int, **kwargs):
     return i
 @fjd.register
-def _(f: float):
+def _(f: float, **kwargs):
     return f
 @fjd.register
-def _(s: str):
+def _(s: str, **kwargs):
     return s
 @fjd.register
-def _(b: bool):
+def _(b: bool, **kwargs):
     return b
 
 
 def register_serializer(type: Type, func: Serializer):
     assert isfunction(func)
-    @to_serializable.register
+    @serialize.register
     def _(target: type) -> JSONSerializable:
         return func(target)
 
 def register_deserializer(type: Type, func: Deserializer):
     assert isfunction(func)
-    @fjd.register
-    def _ds(raw_data) -> type:
+    sig = signature(func)
+    def f1(raw_data, **kwargs): # pylint: disable=invalid-name
         return func(raw_data)
+    f = func if len(sig.parameters) == 2 else f1
+    @fjd.register
+    def _ds(raw_data, **kwargs) -> type:
+        return f(raw_data, **kwargs)
