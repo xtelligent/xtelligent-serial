@@ -56,7 +56,10 @@ primitive or `dataclass` types. Again, please see the
 
 ## Example
 
+* General example:
 [Source Code](https://xtelligent.github.io/xtelligent-serial/docs/examples/simple.html)
+* Example of use with attrs third party library:
+[Source Code](https://xtelligent.github.io/xtelligent-serial/docs/examples/attrs.html)
 
 ## Roadmap
 
