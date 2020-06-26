@@ -7,3 +7,4 @@ if [ "$2" = "--build" ]; then
     docker-compose -f "$MYDIR/docker/compose.yaml" build py
 fi
 docker-compose -f "$MYDIR/docker/compose.yaml" run py python examples/simple.py
+docker-compose -f "$MYDIR/docker/compose.yaml" run py python examples/attrs.py

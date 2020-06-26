@@ -51,18 +51,10 @@ def _(target: str) -> JSONSerializable:
 
 TYPEKEY = '?__type__?'
 
-# def fjd_for_dataclass(type, raw_data):
-#     type_fields = {f.name:f for f in fields(type)}
-#     kwargs = {k: deserialize(type_fields[k].type, v) for k, v in raw_data.items() if k in type_fields}
-#     return type(**kwargs)
-
 @singledispatch
 def fjd(raw_data: JSONSerializable, **kwargs) -> Any:
     if raw_data is None:
         return None
-    # t = raw_data.get(TYPEKEY) or type(object)
-    # if is_dataclass(t):
-    #     return fjd_for_dataclass(t, raw_data)
     raise ValueError('No deserialization method for {0}'.format(kwargs.get('type') or type(raw_data)))
 
 
@@ -70,6 +62,8 @@ def deserialize(t: Type, raw_data: JSONSerializable) -> Any:
     '''Creates an instance of `t` from raw data (dict, list, str, int, etc.).
     Uses a modified single dispatch pattern to find deserializers.
     '''
+    if not t:
+        raise ValueError('Expected t to be a type')
     func = fjd.dispatch(type(raw_data) if t == object else t)
     if not func:
         raise ValueError(f'No deserialization handler for type {t}')
