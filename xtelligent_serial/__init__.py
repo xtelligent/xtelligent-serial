@@ -8,7 +8,7 @@ decorator allows a type (class) to serialize itself.
 In the example links, please expand the code in the example documentation. It is best to
 expand the code at the top of the page to see all the decorators in use.
 '''
-from .data_class import DataClassProxy
+from .data_class import descriptor as DataClassDescriptor
 from .registry import (register_deserializer, register_serializer,
                        serialize, deserialize)
 from .decorator import deserializer, serialization, serializer
