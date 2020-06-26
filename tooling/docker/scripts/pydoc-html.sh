@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-OUTDIR="./docs"
-mkdir -p "$OUTDIR"
-pdoc --html --output-dir "$OUTDIR" xtelligent_serial examples || true
+OUTDIR="/var/doc"
+pdoc --html --output-dir "$OUTDIR" xtelligent_serial examples
