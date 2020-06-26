@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-pydoc -w "$1"
-cat "$1.html"
+OUTDIR="./docs"
+mkdir -p "$OUTDIR"
+pdoc --html --output-dir "$OUTDIR" xtelligent_serial examples || true

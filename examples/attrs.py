@@ -1,12 +1,12 @@
 '''
 Expand the code to view.
 
+Uses the incredible attrs module that was around before dataclasses!
+
 Run:
     $ python attrs.py
     Voila! Vector2d(start=Point(x=0.0, y=2.5), end=Point(x=10.0, y=-5.0))
 '''
-
-# Use the incredible attrs module that was around before dataclasses.
 import attr
 import attr.validators as validators
 

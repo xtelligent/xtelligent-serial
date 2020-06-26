@@ -7,19 +7,14 @@ if [ "$1" = "--build" ]; then
     docker-compose -f "$MYDIR/docker/compose.yaml" build py
 fi
 PROJDIR="$(cd "$MYDIR/.." && pwd)"
-DOCDIR="$PROJDIR/docs"
+DOCDIR="$PROJDIR/.tmp/docs"
 rm -rf "$DOCDIR" || true
 mkdir -p "$DOCDIR"
 
-function makedoc {
-    docker-compose \
-        -f "$MYDIR/docker/compose.yaml" \
-        run \
-        -v "$DOCDIR:/var/doc" \
-        -e "PYTHONWARNINGS=error::UserWarning" \
-        py \
-        pdoc \
-        --html --output-dir /var/doc \
-        "$@"
-}
-makedoc xtelligent_serial examples
+docker-compose \
+    -f "$MYDIR/docker/compose.yaml" \
+    run --rm \
+    -v "$DOCDIR:/var/doc" \
+    -v "$PROJDIR/tooling/docker/scripts/pydoc-html.sh:/usr/project/pydoc-html.sh" \
+    py \
+    ./pydoc-html.sh xtelligent_serial examples
