@@ -91,7 +91,7 @@ jobs:
       run: |
         test -n "$BUILDNUMBER"
         python -m pip install --upgrade pip
-        pip install pdoc3 attr==19.3.0
+        pip install pdoc3 attr
         export PYTHONPATH="$PYTHONPATH:$(pwd)"
         export PYTHONWARNINGS="error::UserWarning"
         MYDIR="$(cd "$(dirname "$0")" && pwd)"
