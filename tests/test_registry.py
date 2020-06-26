@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 
 from xtelligent_serial import (register_serializer, register_deserializer,
-                               to_serializable, from_serializable)
+                               serialize, deserialize)
 
 # pylint: disable=invalid-name
 
@@ -17,14 +17,14 @@ def str2dt(datestr: str):
 
 
 def test_registry1():
-    assert to_serializable(1) == 1
-    assert from_serializable(int, 2) == 2
+    assert serialize(1) == 1
+    assert deserialize(int, 2) == 2
     register_serializer(datetime, dthandler)
     d = datetime.utcfromtimestamp(1590432436)
-    datestr = to_serializable(d)
+    datestr = serialize(d)
     assert datestr == '2020-05-25T18:47:16'
     register_deserializer(datetime, str2dt)
-    d2 = from_serializable(datetime, datestr)
+    d2 = deserialize(datetime, datestr)
     assert d == d2
 
 
@@ -60,12 +60,12 @@ def ds_x(raw_data):
 
 def test_registry2():
     register_serializer(datetime, dthandler)
-    d = to_serializable(X(0, 'zero'))
+    d = serialize(X(0, 'zero'))
     print(d)
     assert d == {'a': 0, 'b': 'zero', 'c': '0:zero', 'd': '2020-01-01T00:00:00',
                  'thedict': {'nested_a': 0, 'nested_d': '2020-01-01T00:00:00'}, 'thelist': [0, 'zero', '0:zero', '2020-01-01T00:00:00']}
     register_deserializer(X, ds_x)
-    x = from_serializable(X, {'a': 2, 'b': 'bbb'})
+    x = deserialize(X, {'a': 2, 'b': 'bbb'})
     assert x.a == 2
     assert x.b == 'bbb'
 
@@ -91,7 +91,7 @@ def ds_a(raw_data):
 
 def ds_b(raw_data):
     return B(
-        from_serializable(A, raw_data['y']),
+        deserialize(A, raw_data['y']),
         raw_data['z'])
 
 
@@ -100,12 +100,12 @@ def test_reversable_serialization():
     register_deserializer(A, ds_a)
     register_deserializer(B, ds_b)
     b = B(A(2112), 'right?')
-    d = to_serializable(b)
-    final = from_serializable(B, d)
+    d = serialize(b)
+    final = deserialize(B, d)
     assert final.z == b.z
 
 
-@dataclass
+@dataclass(frozen=True)
 class SpaceTimeClass:
     d: datetime
     x: float
@@ -117,14 +117,14 @@ def test_auto_dataclass():
     inputs = {'d': datetime.utcfromtimestamp(
         1590448075).isoformat(), 'x': 1.0, 'y': 1.5, 'z': 2.0}
     register_deserializer(datetime, str2dt)
-    result = from_serializable(SpaceTimeClass, inputs)
+    result = deserialize(SpaceTimeClass, inputs)
     assert result.x == 1.0
     assert result.z == 2.0
     assert result.d == datetime.utcfromtimestamp(1590448075)
 
 
 def test_none():
-    n = to_serializable(None)
+    n = serialize(None)
     assert n is None
-    n2 = from_serializable(int, n)
+    n2 = deserialize(int, n)
     assert n2 is None
